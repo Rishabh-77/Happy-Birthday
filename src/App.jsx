@@ -30,7 +30,7 @@ function App() {
         the fixed-position animations. This is the most robust way to solve
         stacking context issues.
       */}
-      <BackgroundMusic src={templateContent.musicPath} />
+      <BackgroundMusic playOn={allCandlesBlown} />
       <ConfettiAnimation onCandleBlow={true} />
       <BalloonAnimation trigger={true} balloonCount={6} />
 

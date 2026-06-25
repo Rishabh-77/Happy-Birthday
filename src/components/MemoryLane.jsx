@@ -25,6 +25,13 @@ import { validatePhotoData } from "../utils/photoUtils";
  */
 const MemoryLane = ({ photos = [] }) => {
   const displayPhotos = validatePhotoData(photos) ? photos : [];
+  const desktopLayouts = [
+    "memory-card-1",
+    "memory-card-2",
+    "memory-card-3",
+    "memory-card-4",
+    "memory-card-5",
+  ];
 
   // Animation variants for staggered photo appearance
   const containerVariants = {
@@ -67,7 +74,7 @@ const MemoryLane = ({ photos = [] }) => {
       >
         <h2 className="text-gray-800 mb-4">Memory Lane</h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          Replace these template cards with moments you want to celebrate.
+          Add your favorite moments and arrange them like a scrapbook.
         </p>
       </motion.div>
 
@@ -77,18 +84,16 @@ const MemoryLane = ({ photos = [] }) => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
-        className="relative w-full h-[1000px] md:h-[1700px] lg:h-[2200px] hp-victus:h-[2500px] overflow-hidden"
+        className="memory-lane-grid"
       >
-        {displayPhotos.map((photo) => (
+        {displayPhotos.map((photo, index) => (
           <motion.div
             key={photo.id}
             variants={photoVariants}
-            className="absolute polaroid cursor-pointer"
+            className={`polaroid memory-card cursor-pointer ${desktopLayouts[index] || ""}`}
             style={{
-              left: `${photo.position.x}%`,
-              top: `${photo.position.y}%`,
-              transform: `translate(-50%, -50%) rotate(${photo.rotation}deg)`,
-              zIndex: photo.id,
+              rotate: `${photo.rotation}deg`,
+              zIndex: index < 3 ? 1 : 2,
             }}
             whileHover={{
               scale: 1.05,
@@ -98,7 +103,7 @@ const MemoryLane = ({ photos = [] }) => {
             }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="w-48 h-56 md:w-56 md:h-64 lg:w-64 lg:h-72 hp-victus:w-72 hp-victus:h-80 overflow-hidden">
+            <div className="memory-photo-frame">
               <img
                 src={photo.src}
                 alt={photo.alt}

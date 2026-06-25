@@ -17,12 +17,6 @@ export const templateContent = {
   footerText: "Made with care using the Birthday Surprise Template",
 
   /**
-   * Add an audio file under public/media and set this to its public path,
-   * for example: "/media/birthday-song.mp3". Leave blank to disable music.
-   */
-  musicPath: "",
-
-  /**
    * Replace each placeholder path with a photo stored under public/media.
    * Keep private media out of Git when preparing a public repository.
    */

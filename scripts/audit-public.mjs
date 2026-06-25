@@ -27,8 +27,12 @@ const repositoryFiles = execFileSync(
   .split(/\r?\n/)
   .filter(Boolean);
 
-const unexpectedMedia = repositoryFiles.filter((file) =>
-  forbiddenExtensions.has(extname(file).toLowerCase()),
+const allowedBundledMedia = new Set(["src/assets/hbd.mp3"]);
+
+const unexpectedMedia = repositoryFiles.filter(
+  (file) =>
+    forbiddenExtensions.has(extname(file).toLowerCase()) &&
+    !allowedBundledMedia.has(file),
 );
 
 if (unexpectedMedia.length > 0) {
