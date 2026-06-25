@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Cake Base -->
+  <rect x="20" y="60" width="60" height="25" fill="#8B4513" rx="3"/>
+  
+  <!-- Cake Middle Layer -->
+  <rect x="25" y="45" width="50" height="20" fill="#FFB6C1" rx="2"/>
+  
+  <!-- Cake Top Layer -->
+  <rect x="30" y="35" width="40" height="15" fill="#FFFFFF" rx="2"/>
+  
+  <!-- Icing on base -->
+  <ellipse cx="50" cy="60" rx="30" ry="3" fill="#FFC0CB"/>
+  
+  <!-- Icing on middle -->
+  <ellipse cx="50" cy="45" rx="25" ry="2.5" fill="#FFFFFF"/>
+  
+  <!-- Icing on top -->
+  <ellipse cx="50" cy="35" rx="20" ry="2" fill="#FFB6C1"/>
+  
+  <!-- Candle -->
+  <rect x="48" y="25" width="4" height="12" fill="#FFD700"/>
+  
+  <!-- Flame -->
+  <ellipse cx="50" cy="22" rx="2" ry="4" fill="#FF4500"/>
+  <ellipse cx="50" cy="21" rx="1.5" ry="3" fill="#FFD700"/>
+  <ellipse cx="50" cy="20" rx="1" ry="2" fill="#FFFFFF"/>
+  
+  <!-- Decorative dots -->
+  <circle cx="35" cy="52" r="1.5" fill="#FF69B4"/>
+  <circle cx="50" cy="50" r="1.5" fill="#FF69B4"/>
+  <circle cx="65" cy="52" r="1.5" fill="#FF69B4"/>
+  
+  <!-- Cherry on top -->
+  <circle cx="45" cy="40" r="2" fill="#DC143C"/>
+  <circle cx="55" cy="40" r="2" fill="#DC143C"/>
+  <path d="M45 38 Q50 35 55 38" stroke="#228B22" stroke-width="1" fill="none"/>
+</svg>

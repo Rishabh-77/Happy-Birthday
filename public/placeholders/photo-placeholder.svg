@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" role="img" aria-labelledby="title description">
+  <title id="title">Template photo placeholder</title>
+  <desc id="description">Replace this file reference with your own photo.</desc>
+  <rect width="800" height="1000" fill="#fdf2f8"/>
+  <rect x="60" y="60" width="680" height="880" rx="32" fill="none" stroke="#f9a8d4" stroke-width="12" stroke-dasharray="28 20"/>
+  <circle cx="400" cy="390" r="110" fill="#fbcfe8"/>
+  <path d="M195 760 350 575l105 120 70-80 105 145H195Z" fill="#f9a8d4"/>
+  <text x="400" y="835" text-anchor="middle" font-family="system-ui, sans-serif" font-size="42" font-weight="700" fill="#be185d">YOUR PHOTO HERE</text>
+  <text x="400" y="890" text-anchor="middle" font-family="system-ui, sans-serif" font-size="25" fill="#9d174d">Template placeholder — safe to publish</text>
+</svg>

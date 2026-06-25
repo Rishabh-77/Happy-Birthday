@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #fdf2f8, #ffffff);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* HP Victus 16" optimized typography scales */
+  h1 {
+    font-size: 3.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  
+  h2 {
+    font-size: 1.875rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+  
+  p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  @media (min-width: 768px) {
+    h1 { font-size: 4.5rem; }
+    h2 { font-size: 2.25rem; }
+    h3 { font-size: 1.875rem; }
+    p { font-size: 1.125rem; }
+  }
+  
+  @media (min-width: 1024px) {
+    h1 { font-size: 6rem; }
+    h2 { font-size: 3rem; }
+    h3 { font-size: 2.25rem; }
+    p { font-size: 1.25rem; }
+  }
+  
+  @media (min-width: 1920px) {
+    h1 { font-size: 10rem; }
+    h2 { font-size: 3.75rem; }
+    h3 { font-size: 3rem; }
+    p { font-size: 1.5rem; }
+  }
+}
+
+@layer components {
+  .polaroid {
+    background-color: white;
+    padding: 0.75rem;
+    padding-bottom: 2rem;
+    box-shadow: 
+      0 10px 15px -3px rgba(0, 0, 0, 0.1), 
+      0 4px 6px -2px rgba(0, 0, 0, 0.05),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+  
+  .polaroid:hover {
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.25),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Handwriting-style font for photo captions */
+  .font-handwriting {
+    font-family: 'Kalam', 'Comic Sans MS', cursive, system-ui;
+    font-weight: 400;
+  }
+  
+  .cloud {
+    position: absolute;
+    opacity: 0.2;
+    color: white;
+    pointer-events: none;
+  }
+
+  /* Cloud animation components */
+  .cloud-container {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .cloud-element {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    will-change: transform;
+  }
+}
+
+@layer utilities {
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .will-change-opacity {
+    will-change: opacity;
+  }
+  
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* HP Victus 16" layout utilities */
+  .hp-victus-container {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .hp-victus-section {
+    padding: 3rem 0 8rem 0;
+  }
+  
+  .hp-victus-hero {
+    min-height: 70vh;
+    padding-top: 0.5rem;
+  }
+  
+  /* Memory Lane scattered layout optimizations */
+  .memory-lane-container {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+  }
+  
+  @media (min-width: 1920px) {
+    .memory-lane-container {
+      min-height: 900px;
+    }
+  }
+
+  /* Large screen optimized spacing */
+  .section-spacing > * + * {
+    margin-top: 2rem;
+  }
+  
+  .content-spacing > * + * {
+    margin-top: 1rem;
+  }
+
+  /* Performance optimizations for animations */
+  .animate-optimized {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+  }
+  
+  @media (min-width: 768px) {
+    .hp-victus-section {
+      padding: 4rem 0 10rem 0;
+    }
+    .hp-victus-hero {
+      min-height: 70vh;
+      padding-top: 0.5rem;
+    }
+    .section-spacing > * + * {
+      margin-top: 3rem;
+    }
+    .content-spacing > * + * {
+      margin-top: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .hp-victus-container {
+      padding: 0 2rem;
+    }
+    .hp-victus-section {
+      padding: 5rem 0 12rem 0;
+    }
+    .section-spacing > * + * {
+      margin-top: 4rem;
+    }
+    .content-spacing > * + * {
+      margin-top: 2rem;
+    }
+  }
+  
+  @media (min-width: 1920px) {
+    .hp-victus-container {
+      padding: 0 3rem;
+    }
+    .hp-victus-section {
+      padding: 6rem 0 15rem 0;
+    }
+    .hp-victus-hero {
+      min-height: 75vh;
+      padding-top: 0;
+    }
+    .section-spacing > * + * {
+      margin-top: 5rem;
+    }
+    .content-spacing > * + * {
+      margin-top: 2.5rem;
+    }
+  }
+}
+
+/* Cloud animation keyframes */
+@keyframes cloudFloat {
+  0% {
+    transform: translateX(-120px) translateY(-50%);
+  }
+  100% {
+    transform: translateX(calc(100vw + 120px)) translateY(-50%);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .cloud-element {
+    animation: none !important;
+  }
+}
