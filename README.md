@@ -1,3 +1,4 @@
+<img width="600" height="375" alt="birthday_surprise" src="https://github.com/user-attachments/assets/ab526e35-7a29-4f8c-853f-8651ec9e5b29" />
 # Birthday Surprise Website Template
 
 A customizable birthday website built with React and Vite. It includes:
