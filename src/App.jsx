@@ -1,6 +1,6 @@
 // src/App.jsx
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./index.css";
 import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
@@ -12,6 +12,7 @@ import MessageSection from "./components/MessageSection";
 import { templateContent } from "./templateContent";
 
 function App() {
+  const musicRef = useRef(null);
   // Manage candle state at app level to control locked sections
   const [candlesBlown, setCandlesBlown] = useState([
     false,
@@ -30,7 +31,7 @@ function App() {
         the fixed-position animations. This is the most robust way to solve
         stacking context issues.
       */}
-      <BackgroundMusic playOn={allCandlesBlown} />
+      <BackgroundMusic ref={musicRef} playOn={allCandlesBlown} />
       <ConfettiAnimation onCandleBlow={true} />
       <BalloonAnimation trigger={true} balloonCount={6} />
 
@@ -48,6 +49,9 @@ function App() {
             age={templateContent.age}
             candlesBlown={candlesBlown}
             setCandlesBlown={setCandlesBlown}
+            onAllCandlesBlown={() =>
+              musicRef.current?.playFromUserGesture()
+            }
           />
         </div>
 

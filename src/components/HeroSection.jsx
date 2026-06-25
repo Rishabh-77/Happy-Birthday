@@ -9,6 +9,7 @@ const HeroSection = ({
   heroImage = null,
   candlesBlown,
   setCandlesBlown,
+  onAllCandlesBlown,
 }) => {
 
   // Animation variants for the text entrance effects
@@ -95,6 +96,7 @@ const HeroSection = ({
         <InteractiveCakeWithImage 
           candlesBlown={candlesBlown}
           setCandlesBlown={setCandlesBlown}
+          onAllCandlesBlown={onAllCandlesBlown}
         />
       </div>
 

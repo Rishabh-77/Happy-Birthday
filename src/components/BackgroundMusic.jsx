@@ -1,66 +1,136 @@
 // src/components/BackgroundMusic.jsx
-import { useEffect, useRef, useState } from "react";
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import birthdayAudio from "../assets/hbd.mp3";
 
-const BackgroundMusic = ({ playOn = false, src = birthdayAudio }) => {
+const BackgroundMusic = forwardRef(function BackgroundMusic(
+  { playOn = false, src = birthdayAudio },
+  ref,
+) {
   const audioRef = useRef(null);
+  const primedRef = useRef(false);
+  const shouldPlayRef = useRef(playOn);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isUnlocked, setIsUnlocked] = useState(playOn);
 
-  const startMusic = () => {
+  const startCelebrationMusic = useCallback(async () => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    audio.play().catch((error) => {
-      console.info("Music is ready; use the music button to start it.", error);
-    });
-  };
+    shouldPlayRef.current = true;
+    setIsUnlocked(true);
+    audio.currentTime = 0;
+    audio.muted = false;
+    audio.volume = 0.3;
+
+    try {
+      await audio.play();
+    } catch (error) {
+      console.info(
+        "The browser blocked audible autoplay. The music button is enabled.",
+        error,
+      );
+    }
+  }, []);
+
+  const primeMusic = useCallback(async () => {
+    const audio = audioRef.current;
+    if (!audio || primedRef.current || shouldPlayRef.current) return;
+
+    audio.muted = true;
+    audio.volume = 0;
+
+    try {
+      await audio.play();
+      primedRef.current = true;
+    } catch {
+      // A later pointer/touch/keyboard action will retry.
+    }
+  }, []);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    audio.volume = 0.3;
-
-    const handlePlay = () => setIsPlaying(true);
+    const handlePlay = () => setIsPlaying(!audio.muted);
     const handlePause = () => setIsPlaying(false);
-    const handleAllCandlesBlown = () => {
-      setIsUnlocked(true);
-      startMusic();
+    const handleVolumeChange = () => setIsPlaying(!audio.paused && !audio.muted);
+    const handleUserActivation = () => {
+      void primeMusic();
     };
 
     audio.addEventListener("play", handlePlay);
     audio.addEventListener("pause", handlePause);
-    window.addEventListener("allCandlesBlown", handleAllCandlesBlown);
+    audio.addEventListener("volumechange", handleVolumeChange);
+    document.addEventListener("pointerdown", handleUserActivation, {
+      capture: true,
+    });
+    document.addEventListener("touchstart", handleUserActivation, {
+      capture: true,
+      passive: true,
+    });
+    document.addEventListener("keydown", handleUserActivation, {
+      capture: true,
+    });
+
+    // Muted autoplay is allowed by modern browsers and gives hover-only users
+    // the best chance of seamless playback after the final candle.
+    void primeMusic();
 
     return () => {
       audio.removeEventListener("play", handlePlay);
       audio.removeEventListener("pause", handlePause);
-      window.removeEventListener("allCandlesBlown", handleAllCandlesBlown);
+      audio.removeEventListener("volumechange", handleVolumeChange);
+      document.removeEventListener("pointerdown", handleUserActivation, {
+        capture: true,
+      });
+      document.removeEventListener("touchstart", handleUserActivation, {
+        capture: true,
+      });
+      document.removeEventListener("keydown", handleUserActivation, {
+        capture: true,
+      });
     };
-  }, []);
+  }, [primeMusic, startCelebrationMusic]);
 
   useEffect(() => {
-    if (playOn) {
-      setIsUnlocked(true);
-      startMusic();
+    if (playOn && !shouldPlayRef.current) {
+      void startCelebrationMusic();
     }
-  }, [playOn]);
+  }, [playOn, startCelebrationMusic]);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      playFromUserGesture: startCelebrationMusic,
+    }),
+    [startCelebrationMusic],
+  );
 
   const toggleMusic = () => {
     const audio = audioRef.current;
     if (!audio || !isUnlocked) return;
 
-    if (isPlaying) {
-      audio.pause();
+    if (audio.paused) {
+      shouldPlayRef.current = true;
+      audio.muted = false;
+      audio.volume = 0.3;
+      void audio.play();
     } else {
-      startMusic();
+      shouldPlayRef.current = false;
+      audio.pause();
     }
   };
 
   return (
     <>
-      <audio ref={audioRef} src={src} preload="auto" loop />
+      <audio ref={audioRef} src={src} preload="auto" loop playsInline />
       <button
         type="button"
         onClick={toggleMusic}
@@ -95,6 +165,6 @@ const BackgroundMusic = ({ playOn = false, src = birthdayAudio }) => {
       </button>
     </>
   );
-};
+});
 
 export default BackgroundMusic;

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 
-const InteractiveCakeWithImage = ({ candlesBlown, setCandlesBlown }) => {
-  const [hoverCounts, setHoverCounts] = useState({});
-
+const InteractiveCakeWithImage = ({
+  candlesBlown,
+  setCandlesBlown,
+  onAllCandlesBlown,
+}) => {
   // Convert array to Set for easier checking
   const blownOutFlames = new Set(
     candlesBlown
@@ -12,36 +14,16 @@ const InteractiveCakeWithImage = ({ candlesBlown, setCandlesBlown }) => {
       .filter(Boolean)
   );
 
-  const handleFlameHover = (flameId) => {
-    // Dispatch candle interaction event to trigger music
-    
-    window.dispatchEvent(
-      new CustomEvent("candleHover", { detail: { candleId: flameId } })
-    );
+  const handleFlamePress = (flameId) => {
+    if (blownOutFlames.has(flameId)) return;
 
-    if (!blownOutFlames.has(flameId)) {
-      const currentCount = hoverCounts[flameId] || 0;
-      const newCount = currentCount + 1;
+    const newCandlesBlown = [...candlesBlown];
+    newCandlesBlown[flameId - 1] = true;
+    setCandlesBlown(newCandlesBlown);
 
-      setHoverCounts((prev) => ({
-        ...prev,
-        [flameId]: newCount,
-      }));
-
-      // Blow out after 5 hovers
-      if (newCount >= 5) {
-        // Update the candles blown state in parent
-        const newCandlesBlown = [...candlesBlown];
-        newCandlesBlown[flameId - 1] = true; // flameId is 1-based, array is 0-based
-        setCandlesBlown(newCandlesBlown);
-
-        // Check if ALL candles are now blown out (5 total candles)
-        const allBlown = newCandlesBlown.every((candle) => candle);
-        if (allBlown) {
-          // Trigger the spectacular full celebration immediately
-          window.dispatchEvent(new CustomEvent("allCandlesBlown"));
-        }
-      }
+    if (newCandlesBlown.every((candle) => candle)) {
+      onAllCandlesBlown?.();
+      window.dispatchEvent(new CustomEvent("allCandlesBlown"));
     }
   };
 
@@ -77,7 +59,7 @@ const InteractiveCakeWithImage = ({ candlesBlown, setCandlesBlown }) => {
               scale: 0,
               transition: { duration: 0.3 },
             }}
-            onMouseEnter={() => handleFlameHover(candleId)}
+            onPointerDown={() => handleFlamePress(candleId)}
           >
             {/* Inner flame core */}
             <div
@@ -481,7 +463,7 @@ const InteractiveCakeWithImage = ({ candlesBlown, setCandlesBlown }) => {
         transition={{ duration: 2, repeat: Infinity }}
       >
         <p className="text-xl font-semibold">
-          Move your cursor over each flame to blow out the candles.
+          Click or tap each flame to blow out the candles.
         </p>
       </motion.div>
 
