@@ -23,8 +23,8 @@ with your own content before deploying a personalized version.
 Clone the repository and install its dependencies:
 
 ```bash
-git clone https://github.com/Rishabh-77/Pookie.git
-cd Pookie
+git clone https://github.com/Rishabh-77/Happy-Birthday.git
+cd Happy-Birthday
 npm install
 ```
 
